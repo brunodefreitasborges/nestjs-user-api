@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int      @id @default(autoincrement())
+  email            String   @unique
+  name             String
+  role             String   @default("user")
+  password         String
+  createdAt        DateTime @default(now())
+  profilePicture   String   @default("https://res.cloudinary.com/dx3a")
+  participantRooms Room[]   @relation("UserParticipantToRoom")
+  ownedRooms       Room[]   @relation("UserOwnerToRoom")
+}
+
+model Room {
+  id           Int      @id @default(autoincrement())
+  name         String
+  createdAt    DateTime @default(now())
+  ownerId      Int
+  owner        User     @relation("UserOwnerToRoom", fields: [ownerId], references: [id])
+  participants User[]   @relation("UserParticipantToRoom")
+}
