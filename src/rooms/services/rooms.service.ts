@@ -31,7 +31,7 @@ export class RoomsService {
     try {
       await this.prisma.room.update({
         where: {
-          id: Number(id),
+          id: id,
         },
         data: {
           participants: {
@@ -51,7 +51,7 @@ export class RoomsService {
     try {
       await this.prisma.room.update({
         where: {
-          id: Number(id),
+          id: id,
         },
         data: {
           participants: {

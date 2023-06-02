@@ -5,14 +5,13 @@ export class UserRequest {
   name: string;
   @IsEmail()
   email: string;
-  role: string;
   @MinLength(6)
   password: string;
   profilePicture: string;
 }
 
 export class UserResponse {
-  id: number;
+  id: string;
   name: string;
   email: string;
   role: string;

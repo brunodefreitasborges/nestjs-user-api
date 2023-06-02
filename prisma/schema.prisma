@@ -10,23 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model User {
-  id               Int      @id @default(autoincrement())
+  id               String      @id @default(uuid())
   email            String   @unique
   name             String
   role             String   @default("user")
   password         String
   createdAt        DateTime @default(now())
+  emailConfirmed   Boolean  @default(false)
+  confirmationToken String @unique
   profilePicture   String   @default("https://res.cloudinary.com/dx3a")
   participantRooms Room[]   @relation("UserParticipantToRoom")
   ownedRooms       Room[]   @relation("UserOwnerToRoom")
 }
 
 model Room {
-  id           Int      @id @default(autoincrement())
+  id           String      @id @default(uuid())
   name         String
   createdAt    DateTime @default(now())
-  ownerId      Int
+  ownerId      String
   owner        User     @relation("UserOwnerToRoom", fields: [ownerId], references: [id])
   participants User[]   @relation("UserParticipantToRoom")
 }

@@ -21,27 +21,14 @@ export class UserController {
     return await this.userService.login(body);
   }
 
-  @Get()
-  @UseGuards(AdminGuard)
-  async getAllUsers(): Promise<UserResponse[]> {
-    const users = await this.userService.getAllUsers();
-    return users.map((user) => {
-      const userResponse: UserResponse = {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        password: user.password,
-        createdAt: user.createdAt,
-        profilePicture: user.profilePicture,
-      };
-      return userResponse;
-    });
+  @Post()
+  async registerUser(@Body() body: UserRequest): Promise<string> {
+    return this.userService.registerUser(body);
   }
 
-  @Post()
-  async registerUser(@Body() body: UserRequest): Promise<void> {
-    this.userService.registerUser(body);
+  @Get('email-confirmation')
+  async confirmEmail(@Param('token') token: string): Promise<string> {
+    return this.userService.confirmEmail(token);
   }
 
   @Patch(':id')
@@ -51,11 +38,5 @@ export class UserController {
     @Body() body: UserRequest,
   ): Promise<void> {
     this.userService.updateUser(id, body);
-  }
-
-  @Delete(':id')
-  @UseGuards(AdminGuard)
-  async deleteUser(@Param('id') id: string): Promise<void> {
-    this.userService.deleteUser(id);
   }
 }
