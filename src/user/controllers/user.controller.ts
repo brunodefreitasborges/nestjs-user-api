@@ -1,14 +1,13 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   Post,
   Patch,
   UseGuards,
 } from '@nestjs/common';
-import { LoginRequest, UserRequest, UserResponse } from '../models/user.models';
+import { LoginRequest, UserRequest } from '../models/user.models';
 import { UserService } from '../services/user.service';
 import { AdminGuard } from '../guards/admin.guard';
 
