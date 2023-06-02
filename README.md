@@ -14,7 +14,7 @@ npm install
 
 3 - Add the following line in order to point to the local SQLite DB:
 ```
-DATABASE_URL=prisma/dev.db
+DATABASE_URL=file:dev.db
 ```
 
 4 - Add a random string to serve as the JWT secret:
