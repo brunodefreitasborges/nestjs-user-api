@@ -6,8 +6,13 @@ import {
   Post,
   Patch,
   UseGuards,
+  Query,
 } from '@nestjs/common';
-import { LoginRequest, UserRequest } from '../models/user.models';
+import {
+  LoginRequest,
+  PasswordReset,
+  UserRequest,
+} from '../models/user.models';
 import { UserService } from '../services/user.service';
 import { AdminGuard } from '../guards/admin.guard';
 
@@ -26,8 +31,21 @@ export class UserController {
   }
 
   @Get('email-confirmation')
-  async confirmEmail(@Param('token') token: string): Promise<string> {
+  async confirmEmail(@Query('token') token: string): Promise<string> {
     return this.userService.confirmEmail(token);
+  }
+
+  @Get('forgot-password')
+  async forgotPassword(@Query('email') email: string): Promise<string> {
+    return this.userService.forgotPassword(email);
+  }
+
+  @Patch('reset-password')
+  async resetPassword(
+    @Query('token') token: string,
+    @Body() body: PasswordReset,
+  ) {
+    return this.userService.resetPassword(token, body);
   }
 
   @Patch(':id')

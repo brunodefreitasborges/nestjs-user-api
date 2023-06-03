@@ -8,6 +8,7 @@ CREATE TABLE "User" (
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "emailConfirmed" BOOLEAN NOT NULL DEFAULT false,
     "confirmationToken" TEXT NOT NULL,
+    "passwordResetToken" TEXT NOT NULL,
     "profilePicture" TEXT NOT NULL DEFAULT 'https://res.cloudinary.com/dx3a'
 );
 
@@ -33,6 +34,9 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_confirmationToken_key" ON "User"("confirmationToken");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_passwordResetToken_key" ON "User"("passwordResetToken");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_UserParticipantToRoom_AB_unique" ON "_UserParticipantToRoom"("A", "B");

@@ -26,3 +26,8 @@ export class LoginRequest {
   @MinLength(6)
   password: string;
 }
+
+export class PasswordReset {
+  @MinLength(6)
+  password: string;
+}
