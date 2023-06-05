@@ -12,6 +12,7 @@ import {
   LoginRequest,
   PasswordReset,
   UserRequest,
+  UserResponse,
 } from '../models/user.models';
 import { UserService } from '../services/user.service';
 import { AdminGuard } from '../guards/admin.guard';
@@ -21,7 +22,7 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post('login')
-  async login(@Body() body: LoginRequest): Promise<string> {
+  async login(@Body() body: LoginRequest): Promise<UserResponse> {
     return await this.userService.login(body);
   }
 

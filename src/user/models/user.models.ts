@@ -11,13 +11,14 @@ export class UserRequest {
 }
 
 export class UserResponse {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  password: string;
-  createdAt: Date;
-  profilePicture: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    profilePicture: string;
+  };
+  token: string;
 }
 
 export class LoginRequest {

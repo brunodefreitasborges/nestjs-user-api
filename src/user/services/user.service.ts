@@ -6,6 +6,7 @@ import {
   LoginRequest,
   PasswordReset,
   UserRequest,
+  UserResponse,
 } from '../models/user.models';
 import * as jwt from 'jsonwebtoken';
 import { MailerService } from '@nestjs-modules/mailer';
@@ -19,7 +20,7 @@ export class UserService {
     private mailerService: MailerService,
   ) {}
 
-  async login(body: LoginRequest): Promise<string> {
+  async login(body: LoginRequest): Promise<UserResponse> {
     try {
       const user = await this.prisma.user.findUnique({
         where: {
@@ -33,7 +34,17 @@ export class UserService {
           { id: user.id, role: user.role },
           this.configService.get<string>('SECRET_KEY'),
         );
-        return token;
+        const response = {
+          user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            profilePicture: user.profilePicture,
+          },
+          token: token,
+        };
+        return response;
       } else {
         throw new HttpException(
           'Credenciais inválidas',
