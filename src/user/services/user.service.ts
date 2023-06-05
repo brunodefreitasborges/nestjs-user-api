@@ -11,6 +11,10 @@ import {
 import * as jwt from 'jsonwebtoken';
 import { MailerService } from '@nestjs-modules/mailer';
 import { randomUUID } from 'crypto';
+import {
+  passwordReset,
+  emailConfirmation,
+} from '../../common/templates/email-templates';
 
 @Injectable()
 export class UserService {
@@ -79,7 +83,7 @@ export class UserService {
       to: body.email,
       from: 'noreply@application.com',
       subject: 'Email de confirmação',
-      template: 'email-confirmation',
+      html: emailConfirmation(confirmationToken),
       context: {
         token: confirmationToken,
       },
@@ -127,7 +131,7 @@ export class UserService {
         to: email,
         from: 'noreply@application.com',
         subject: 'Email de recuperação de senha',
-        template: 'password-reset',
+        html: passwordReset(passwordResetToken),
         context: {
           token: passwordResetToken,
         },
